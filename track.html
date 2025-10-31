@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>CivicTech Connect - Complaints</title>
+  <link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;700;900&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <script>
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "primary": "#1767e8",
+            "background-light": "#f6f7f8",
+            "background-dark": "#111721",
+          },
+          fontFamily: {
+            "display": ["Public Sans"]
+          },
+          borderRadius: {
+            "DEFAULT": "0.5rem",
+            "lg": "1rem",
+            "xl": "1.5rem",
+            "full": "9999px"
+          },
+        },
+      },
+    }
+  </script>
+  <style>
+    body {
+      opacity: 0;
+      transform: scale(0.98);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+    body.loaded { opacity: 1; transform: scale(1); }
+    body.fade-out { opacity: 0; transform: scale(0.98); }
+
+    /* Animations */
+    .fade-in-up {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+    .fade-in-up.visible { opacity: 1; transform: translateY(0); }
+
+    .fade-in {
+      opacity: 0;
+      transition: opacity 0.6s ease;
+    }
+    .fade-in.visible { opacity: 1; }
+  </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-800 dark:text-slate-200">
+
+  <!-- Header -->
+  <header class="fade-in-up bg-background-light dark:bg-background-dark border-b border-slate-200 dark:border-slate-700 sticky top-0 z-10">
+    <div class="max-w-7xl mx-auto px-6">
+      <div class="flex justify-between items-center py-4">
+        <div class="flex items-center gap-2">
+          <svg class="w-8 h-8 text-primary" fill="currentColor" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+            <path d="M24 45.8096C19.6865 45.8096 15.4698 44.5305 11.8832 42.134C8.29667 39.7376 5.50128 36.3314 3.85056 32.3462C2.19985 28.361 1.76794 23.9758 2.60947 19.7452C3.451 15.5145 5.52816 11.6284 8.57829 8.5783C11.6284 5.52817 15.5145 3.45101 19.7452 2.60948C23.9758 1.76795 28.361 2.19986 32.3462 3.85057C36.3314 5.50129 39.7376 8.29668 42.134 11.8833C44.5305 15.4698 45.8096 19.6865 45.8096 24L24 24L24 45.8096Z"/>
+          </svg>
+          <div>
+            <h1 class="text-lg font-bold">CivicTech Connect</h1>
+            <p class="text-xs text-slate-500">Smart Cities Mission</p>
+          </div>
+        </div>
+        <nav class="flex gap-4 items-center">
+          <a href="./index.html" class="text-slate-600 dark:text-slate-300 hover:text-primary">Home</a>
+          <a href="./login_page.html" class="bg-primary text-white font-semibold px-4 py-2 rounded-lg hover:bg-blue-700 transition">Log In</a>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main -->
+  <main class="max-w-7xl mx-auto p-8 fade-in-up">
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+      
+      <!-- Complaint Status Tracker -->
+      <div class="bg-white dark:bg-slate-900/50 rounded-xl p-6 shadow-sm fade-in-up">
+        <h2 class="text-2xl font-bold text-slate-900 dark:text-white text-center mb-6">
+          Track Your Complaint
+        </h2>
+        
+        <!-- Progress Steps -->
+        <div class="flex items-center justify-between mb-6">
+          <div class="flex flex-col items-center flex-1">
+            <div class="w-10 h-10 flex items-center justify-center rounded-full bg-primary text-white font-bold">1</div>
+            <p class="mt-2 text-sm font-medium">Complaint Received</p>
+          </div>
+          <div class="flex-1 border-t-2 border-slate-300 dark:border-slate-600"></div>
+          <div class="flex flex-col items-center flex-1">
+            <div class="w-10 h-10 flex items-center justify-center rounded-full bg-slate-300 dark:bg-slate-700 text-white">2</div>
+            <p class="mt-2 text-sm font-medium">Work Assigned</p>
+          </div>
+          <div class="flex-1 border-t-2 border-slate-300 dark:border-slate-600"></div>
+          <div class="flex flex-col items-center flex-1">
+            <div class="w-10 h-10 flex items-center justify-center rounded-full bg-slate-300 dark:bg-slate-700 text-white">3</div>
+            <p class="mt-2 text-sm font-medium">In Progress</p>
+          </div>
+          <div class="flex-1 border-t-2 border-slate-300 dark:border-slate-600"></div>
+          <div class="flex flex-col items-center flex-1">
+            <div class="w-10 h-10 flex items-center justify-center rounded-full bg-slate-300 dark:bg-slate-700 text-white">4</div>
+            <p class="mt-2 text-sm font-medium">Resolved</p>
+          </div>
+        </div>
+
+        <!-- Complaint Location -->
+        <div class="text-center mb-4">
+          <span class="inline-flex items-center px-4 py-2 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 shadow-sm">
+            📍 Complaint Location: Pothole reported here 🛠️
+          </span>
+        </div>
+
+        <!-- Map -->
+        <div class="rounded-lg overflow-hidden shadow-md">
+          <iframe 
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d124441.68756592963!2d77.6273917722525!3d12.920396572659275!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bae1220bb1e8585%3A0x8c401aeb89c78b32!2sDivyaSree%20Technopark!5e0!3m2!1sen!2sin!4v1758570849110!5m2!1sen!2sin" 
+            width="100%" 
+            height="350" 
+            style="border:0;" 
+            allowfullscreen="" 
+            loading="lazy" 
+            referrerpolicy="no-referrer-when-downgrade">
+          </iframe>
+        </div>
+      </div>
+
+      <!-- Complaints Dashboard -->
+      <div class="bg-white dark:bg-slate-900/50 rounded-xl p-6 shadow-sm fade-in-up">
+        <div class="flex justify-between items-center mb-6">
+          <h2 class="text-2xl font-bold text-slate-900 dark:text-white">Complaints History</h2>
+          <div class="relative">
+            <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 dark:text-slate-500">search</span>
+            <input class="pl-10 pr-4 py-2 w-64 rounded-lg bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 focus:ring-2 focus:ring-primary focus:border-primary outline-none" placeholder="Search complaints..." type="text"/>
+          </div>
+        </div>
+        
+        <div class="overflow-x-auto">
+          <table class="w-full text-left">
+            <thead class="border-b border-slate-200 dark:border-slate-700">
+              <tr>
+                <th class="p-4 text-sm font-semibold text-slate-500 dark:text-slate-400">Complaint ID</th>
+                <th class="p-4 text-sm font-semibold text-slate-500 dark:text-slate-400">Category</th>
+                <th class="p-4 text-sm font-semibold text-slate-500 dark:text-slate-400">Urgency</th>
+                <th class="p-4 text-sm font-semibold text-slate-500 dark:text-slate-400">Status</th>
+                <th class="p-4 text-sm font-semibold text-slate-500 dark:text-slate-400">Date</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="border-b border-slate-100 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-800/50">
+                <td class="p-4 font-medium text-slate-800 dark:text-slate-200">#11345</td>
+                <td class="p-4 text-slate-600 dark:text-slate-300">Pothole</td>
+                <td class="p-4">
+                  <span class="px-2 py-1 text-xs font-semibold rounded-full bg-red-100 text-red-800 dark:bg-red-900/50 dark:text-red-300">High</span>
+                </td>
+                <td class="p-4">
+                  <span class="px-2 py-1 text-xs font-semibold rounded-full bg-blue-100 text-blue-800 dark:bg-blue-900/50 dark:text-blue-300">Open</span>
+                </td>
+                <td class="p-4 text-slate-600 dark:text-slate-300">2024-07-26</td>
+              </tr>
+              <tr class="border-b border-slate-100 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-800/50">
+                <td class="p-4 font-medium text-slate-800 dark:text-slate-200">#10346</td>
+                <td class="p-4 text-slate-600 dark:text-slate-300">Streetlight Outage</td>
+                <td class="p-4">
+                  <span class="px-2 py-1 text-xs font-semibold rounded-full bg-orange-100 text-orange-800 dark:bg-orange-900/50 dark:text-orange-300">Medium</span>
+                </td>
+                <td class="p-4">
+                  <span class="px-2 py-1 text-xs font-semibold rounded-full bg-purple-100 text-purple-800 dark:bg-purple-900/50 dark:text-purple-300">Assigned</span>
+                </td>
+                <td class="p-4 text-slate-600 dark:text-slate-300">2024-07-25</td>
+              </tr>
+              <tr class="border-b border-slate-100 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-800/50">
+                <td class="p-4 font-medium text-slate-800 dark:text-slate-200">#19347</td>
+                <td class="p-4 text-slate-600 dark:text-slate-300">Garbage Overflow</td>
+                <td class="p-4">
+                  <span class="px-2 py-1 text-xs font-semibold rounded-full bg-green-100 text-green-800 dark:bg-green-900/50 dark:text-green-300">Low</span>
+                </td>
+                <td class="p-4">
+                  <span class="px-2 py-1 text-xs font-semibold rounded-full bg-green-100 text-green-800 dark:bg-green-900/50 dark:text-green-300">Resolved</span>
+                </td>
+                <td class="p-4 text-slate-600 dark:text-slate-300">2024-07-24</td>
+              </tr>
+              <tr class="border-b border-slate-100 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-800/50">
+                <td class="p-4 font-medium text-slate-800 dark:text-slate-200">#15348</td>
+                <td class="p-4 text-slate-600 dark:text-slate-300">Water Leak</td>
+                <td class="p-4">
+                  <span class="px-2 py-1 text-xs font-semibold rounded-full bg-red-100 text-red-800 dark:bg-red-900/50 dark:text-red-300">High</span>
+                </td>
+                <td class="p-4">
+                  <span class="px-2 py-1 text-xs font-semibold rounded-full bg-blue-100 text-blue-800 dark:bg-blue-900/50 dark:text-blue-300">Open</span>
+                </td>
+                <td class="p-4 text-slate-600 dark:text-slate-300">2024-07-23</td>
+              </tr>
+              <tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50">
+                <td class="p-4 font-medium text-slate-800 dark:text-slate-200">#17349</td>
+                <td class="p-4 text-slate-600 dark:text-slate-300">Traffic Signal Malfunction</td>
+                <td class="p-4">
+                  <span class="px-2 py-1 text-xs font-semibold rounded-full bg-orange-100 text-orange-800 dark:bg-orange-900/50 dark:text-orange-300">Medium</span>
+                </td>
+                <td class="p-4">
+                  <span class="px-2 py-1 text-xs font-semibold rounded-full bg-purple-100 text-purple-800 dark:bg-purple-900/50 dark:text-purple-300">Assigned</span>
+                </td>
+                <td class="p-4 text-slate-600 dark:text-slate-300">2024-07-22</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="text-center mt-12 fade-in">
+      <p class="text-sm text-slate-500 dark:text-slate-400">Hackathon 2025 &copy; IMPACT BRIDGE</p>
+    </footer>
+  </main>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      document.body.classList.add("loaded");
+
+      const elements = document.querySelectorAll(".fade-in-up, .fade-in");
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("visible");
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.2 });
+
+      elements.forEach(el => observer.observe(el));
+    });
+
+    // Smooth page out transition
+    document.querySelectorAll("a").forEach(link => {
+      if (link.hostname === window.location.hostname) {
+        link.addEventListener("click", e => {
+          e.preventDefault();
+          document.body.classList.add("fade-out");
+          setTimeout(() => {
+            window.location.href = link.href;
+          }, 600);
+        });
+      }
+    });
+  </script>
+</body>
+</html>

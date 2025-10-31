@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>CivicTech Connect</title>
+  <link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;700&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
+  <style>
+    :root {
+      --primary: #1767e8;
+      --primary-hover: #145acc;
+      --background-light: #f6f7f8;
+      --background-dark: #111721;
+      --text-light: #f6f7f8;
+      --text-dark: #1e293b;
+    }
+
+    body {
+      margin: 0;
+      font-family: "Public Sans", sans-serif;
+      background-color: var(--background-light);
+      color: #1e293b;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+      opacity: 0;
+      transform: scale(0.98);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+    body.loaded { opacity: 1; transform: scale(1); }
+    body.fade-out { opacity: 0; transform: scale(0.98); }
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      background: var(--background-light);
+      border-bottom: 1px solid #e2e8f0;
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 1rem;
+    }
+
+    .header-inner {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 0;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .logo svg {
+      width: 32px;
+      height: 32px;
+      color: var(--primary);
+    }
+
+    nav {
+      display: flex;
+      gap: 1.5rem;
+      align-items: center;
+    }
+
+    nav a {
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 500;
+      color: #475569;
+      transition: color 0.3s ease;
+    }
+    nav a:hover { color: var(--primary); }
+
+    nav a.login-btn {
+      background: var(--primary);
+      color: #fff !important;
+      font-size: 1rem;
+      font-weight: 600;
+      padding: 0.55rem 1.2rem;
+      border-radius: 0.5rem;
+      transition: background 0.3s ease, transform 0.2s ease;
+    }
+    nav a.login-btn:hover {
+      background: var(--primary-hover);
+      transform: scale(1.05);
+    }
+
+    main {
+      flex-grow: 1;
+      padding: 4rem 1rem;
+    }
+
+    .hero {
+      max-width: 800px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    /* Typing effect */
+    .hero h2 {
+      font-size: 2.5rem;
+      font-weight: bold;
+      color: #0f172a;
+      display: inline-block;
+      white-space: nowrap;
+      overflow: hidden;
+    }
+
+    @keyframes blink { 50% { border-color: transparent } }
+    .cursor {
+      border-right: 3px solid #0f172a;
+      animation: blink 0.8s step-end infinite;
+    }
+
+    .hero p {
+      margin-top: 1rem;
+      font-size: 1.1rem;
+      color: #475569;
+    }
+
+    .report-box {
+      margin-top: 2rem;
+      background: #fff;
+      border: 1px solid #e2e8f0;
+      border-radius: 1rem;
+      padding: 2rem;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    }
+
+    .report-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      width: 100%;
+      max-width: 300px;
+      margin: 0 auto;
+      padding: 1rem;
+      font-size: 1rem;
+      font-weight: bold;
+      background: var(--primary);
+      color: white;
+      border: none;
+      border-radius: 0.5rem;
+      cursor: pointer;
+      transition: 0.2s ease;
+    }
+    .report-btn:hover { background: var(--primary-hover); transform: scale(1.05); }
+
+    .report-note {
+      margin-top: 0.5rem;
+      font-size: 0.75rem;
+      color: #64748b;
+    }
+
+    .quick-links {
+      margin-top: 1.5rem;
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .quick-links a {
+      flex: 1;
+      min-width: 120px;
+      text-align: center;
+      padding: 0.75rem;
+      background: #f1f5f9;
+      color: #334155;
+      text-decoration: none;
+      font-weight: 600;
+      border-radius: 0.5rem;
+      transition: background 0.3s ease;
+    }
+    .quick-links a:hover { background: #e2e8f0; }
+
+    .stories { margin-top: 4rem; }
+    .stories h3 { font-size: 1.5rem; font-weight: bold; margin-bottom: 2rem; }
+
+    .story-grid {
+      display: grid;
+      gap: 2rem;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    }
+
+    .story-card {
+      background: white;
+      border: 1px solid #e2e8f0;
+      border-radius: 1rem;
+      overflow: hidden;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    }
+    .story-card img { width: 100%; height: 200px; object-fit: cover; }
+    .story-card .content { padding: 1.5rem; }
+    .story-card p { margin: 0; }
+    .story-card .location { margin-top: 0.5rem; font-size: 0.85rem; color: #64748b; }
+
+    footer {
+      margin-top: auto;
+      background: var(--background-light);
+      border-top: 1px solid #e2e8f0;
+      padding: 1rem 0;
+      text-align: center;
+    }
+    footer p { font-size: 0.85rem; color: #64748b; }
+
+    .fade-in-up {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+    .fade-in-up.visible { opacity: 1; transform: translateY(0); }
+
+    .fade-in { opacity: 0; transition: opacity 0.6s ease; }
+    .fade-in.visible { opacity: 1; }
+  </style>
+</head>
+<body>
+  <div class="flex flex-col min-h-screen">
+    <header class="fade-in-up">
+      <div class="container">
+        <div class="header-inner">
+          <div class="logo">
+            <svg fill="currentColor" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+              <path d="M24 45.8096C19.6865 45.8096 15.4698 44.5305 11.8832 42.134C8.29667 39.7376 5.50128 36.3314 3.85056 32.3462C2.19985 28.361 1.76794 23.9758 2.60947 19.7452C3.451 15.5145 5.52816 11.6284 8.57829 8.5783C11.6284 5.52817 15.5145 3.45101 19.7452 2.60948C23.9758 1.76795 28.361 2.19986 32.3462 3.85057C36.3314 5.50129 39.7376 8.29668 42.134 11.8833C44.5305 15.4698 45.8096 19.6865 45.8096 24L24 24L24 45.8096Z"/>
+            </svg>
+            <div>
+              <h1 style="margin:0; font-size:1.2rem; font-weight:bold;">CivicTech Connect</h1>
+              <p style="margin:0; font-size:0.85rem; color:#64748b;">Smart Cities Mission</p>
+            </div>
+          </div>
+          <nav>
+            <a href="./login_page.html" class="login-btn">Log In</a>
+          </nav>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <div class="hero fade-in-up">
+        <h2 id="typingText" class="cursor"></h2>
+        <p>Quickly and easily report civic issues, track their progress, and see the positive change in your community.</p>
+        
+        <div class="report-box fade-in-up">
+          <button class="report-btn" id="reportBtn">
+            <span class="material-symbols-outlined">camera_alt</span>
+             Report an Issue
+            <span class="material-symbols-outlined">location_on</span>
+          </button>
+          <p class="report-note">Use your camera and location for a quick report.</p>
+          <div class="quick-links fade-in">
+            <a href="./track.html">Track Your Complains</a>
+            <a href="#">Your</a>
+            <a href="./Help.html">Help & FAQs</a>
+          </div>
+        </div>
+
+        <div class="stories fade-in-up">
+          <h3>Latest Highlights & Achievements</h3>
+          <div class="story-grid">
+            <div class="story-card fade-in-up">
+              <img src="https://t3.ftcdn.net/jpg/02/01/41/92/360_F_201419293_4CQG3pEVyRltQzy7ImZMJvWntCsMS4TM.jpg" alt="Fixed potholes"/>
+              <div class="content">
+                <p><strong>100 Potholes Fixed This Week</strong></p>
+                <p class="location">Sector 17, Banglore</p>
+              </div>
+            </div>
+
+            <div class="story-card fade-in-up">
+              <img src="https://www.shutterstock.com/image-photo/detail-shot-broken-street-lamp-600nw-334237046.jpg" alt="Restored streetlights"/>
+              <div class="content">
+                <p><strong>87 Streetlights Restored in Aastha Ward</strong></p>
+                <p class="location">Jubilee Hills, Hyderabad</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <footer class="fade-in">
+      <p> Hackathon 2025 &copy; IMPACT BRIDGE</p>
+    </footer>
+  </div>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      document.body.classList.add("loaded");
+
+      const elements = document.querySelectorAll(".fade-in-up, .fade-in");
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("visible");
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.2 });
+
+      elements.forEach(el => observer.observe(el));
+    });
+
+    // Smooth transition when clicking Report
+    document.getElementById("reportBtn").addEventListener("click", (e) => {
+      e.preventDefault();
+      document.body.classList.add("fade-out");
+      setTimeout(() => {
+        window.location.href = "./report.html";
+      }, 600);
+    });
+
+    // Typing Effect (no jitter)
+    const phrases = ["Your Voice for a Better City", "Report. Track. Resolve. Together."];
+    let currentPhrase = 0;
+    let currentChar = 0;
+    const typingText = document.getElementById("typingText");
+    let isDeleting = false;
+
+    function typeEffect() {
+      const text = phrases[currentPhrase];
+
+      if (!isDeleting) {
+        typingText.textContent = text.substring(0, currentChar + 1);
+        currentChar++;
+        if (currentChar === text.length) {
+          setTimeout(() => { isDeleting = true; typeEffect(); }, 2000);
+          return;
+        }
+      } else {
+        typingText.textContent = text.substring(0, currentChar - 1);
+        currentChar--;
+        if (currentChar === 0) {
+          isDeleting = false;
+          currentPhrase = (currentPhrase + 1) % phrases.length;
+          // directly start next phrase without gap
+          typeEffect();
+          return;
+        }
+      }
+      setTimeout(typeEffect, isDeleting ? 50 : 100);
+    }
+
+    typeEffect();
+  </script>
+</body>
+</html>
